@@ -25,4 +25,4 @@ function TransactionTable({ transactions }) {
   );
 }
 
-export default TransactionTable
+export default TransactionTable;

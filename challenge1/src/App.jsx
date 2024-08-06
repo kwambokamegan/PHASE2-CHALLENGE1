@@ -10,12 +10,13 @@ function App() {
 
   useEffect(() => {
     fetch('http://localhost:3000/transactions')
-      .then(response => response.json()) //converts data to json
-      .then(data => setTransactions(data));//updates transactions with the data
+      .then(response => response.json())
+      .then(data => setTransactions(data))
+      .catch(error => console.error('Error fetching transactions:', error));
   }, []);
 
   const addTransaction = (transaction) => {
-    fetch('http://localhost:3000/transactions', {//add a new transaction
+    fetch('http://localhost:3000/transactions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -23,7 +24,8 @@ function App() {
       body: JSON.stringify(transaction)
     })
       .then(response => response.json())
-      .then(data => setTransactions([...transactions, data]));//updates transactions
+      .then(data => setTransactions(prevTransactions => [...prevTransactions, data]))
+      .catch(error => console.error('Error adding transaction:', error));
   };
 
   const filteredTransactions = transactions.filter(transaction =>
@@ -41,4 +43,3 @@ function App() {
 }
 
 export default App;
-  

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-function AddTransactionForm({ onAddTransaction }) {
-  const [form, setForm] = useState({
+function TransactionForm({ onAddTransaction }) {
+  const [formData, setFormData] = useState({
     date: '',
     description: '',
     category: '',
@@ -9,32 +9,27 @@ function AddTransactionForm({ onAddTransaction }) {
   });
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    fetch('http://localhost:3001/transactions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(form)
-    })
-      .then(response => response.json())
-      .then(newTransaction => {
-        onAddTransaction(newTransaction);
-        setForm({
-          date: '',
-          description: '',
-          category: '',
-          amount: ''
-        });
+    // Validate the form data if needed
+    if (formData.date && formData.description && formData.category && formData.amount) {
+      onAddTransaction(formData);
+      setFormData({
+        date: '',
+        description: '',
+        category: '',
+        amount: ''
       });
+    } else {
+      alert('All fields are required!');
+    }
   };
 
   return (
@@ -42,14 +37,14 @@ function AddTransactionForm({ onAddTransaction }) {
       <input
         type="date"
         name="date"
-        value={form.date}
+        value={formData.date}
         onChange={handleChange}
         required
       />
       <input
         type="text"
         name="description"
-        value={form.description}
+        value={formData.description}
         onChange={handleChange}
         placeholder="Description"
         required
@@ -57,7 +52,7 @@ function AddTransactionForm({ onAddTransaction }) {
       <input
         type="text"
         name="category"
-        value={form.category}
+        value={formData.category}
         onChange={handleChange}
         placeholder="Category"
         required
@@ -65,7 +60,7 @@ function AddTransactionForm({ onAddTransaction }) {
       <input
         type="number"
         name="amount"
-        value={form.amount}
+        value={formData.amount}
         onChange={handleChange}
         placeholder="Amount"
         required
@@ -75,4 +70,4 @@ function AddTransactionForm({ onAddTransaction }) {
   );
 }
 
-export default AddTransactionForm;
+export default TransactionForm;

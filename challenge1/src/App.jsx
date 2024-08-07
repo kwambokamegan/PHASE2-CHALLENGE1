@@ -9,14 +9,14 @@ function App() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:3000/transactions')
+    fetch('https://flat-iron-bank-backend.vercel.app/transactions')
       .then(response => response.json())
       .then(data => setTransactions(data))
       .catch(error => console.error('Error fetching transactions:', error));
   }, []);
 
   const addTransaction = (transaction) => {
-    fetch('http://localhost:3000/transactions', {
+    fetch('https://flat-iron-bank-backend.vercel.app/transactions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

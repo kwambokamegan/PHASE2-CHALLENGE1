@@ -90,6 +90,13 @@
       "description": "paid for fries",
       "category": "food",
       "amount": "4333"
+    },
+    {
+      "id": "0125",
+      "date": "4222-03-12",
+      "description": "paid fees",
+      "category": "fees",
+      "amount": "5678"
     }
   ]
 }
